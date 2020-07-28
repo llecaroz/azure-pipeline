@@ -35,7 +35,7 @@ stages:
         dependsOn: prepare
         variables:
           - name: the_previous_variable
-            value: $[dependencies.prepare.outputs['mystep.vsoVar']]
+            value: $[dependencies]
         steps:
         - script: echo Hello, world!
           displayName: 'Run a one-line script'
