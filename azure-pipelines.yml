@@ -29,7 +29,7 @@ stages:
             script: |
               # Write your commands here
               export samplevar=myvalue
-              echo "##vso[task.setvariable variable=vsoVar]$samplevar"
+              echo "##vso[task.setvariable variable=vsoVar;isOutput=true]$samplevar"
               echo 'Hello world'
       - job: use
         dependsOn: prepare
