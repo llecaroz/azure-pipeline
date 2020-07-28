@@ -23,9 +23,9 @@ stages:
             echo See https://aka.ms/yaml
           displayName: 'Run a multi-line script'
         - task: Bash@3
+          name: mystep
           inputs:
             targetType: 'inline'
-            name: mystep
             script: |
               # Write your commands here
               export samplevar=myvalue
