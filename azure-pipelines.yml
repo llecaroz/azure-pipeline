@@ -31,4 +31,4 @@ steps:
     script: |
       # Write your commands here
       
-      echo 'Hello world: $vsoVar'
+      echo "Hello world in second bash: $vsoVar"
