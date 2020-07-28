@@ -23,7 +23,7 @@ steps:
     script: |
       # Write your commands here
       set samplevar=myvalue
-      echo "##vso[task.setvariable variable=vsoVar]Blablabla"
+      echo "##vso[task.setvariable variable=vsoVar]$samplevar"
       echo 'Hello world'
 - task: Bash@3
   inputs:
