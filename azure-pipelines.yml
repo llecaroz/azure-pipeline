@@ -45,3 +45,7 @@ stages:
               # Write your commands here
               
               echo "Hello world in second bash: $(the_previous_variable)"
+      - job: docker_container
+        container: ubuntu:18.04
+        steps:
+        - script: printenv
