@@ -11,6 +11,8 @@ pool:
 
 stages:
   - template: templates/stages.yml
+    parameters:
+      credentials-group-name: my-library
   - stage: init
     displayName: Init
     jobs:
