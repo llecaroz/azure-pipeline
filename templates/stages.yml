@@ -1,12 +1,12 @@
 parameters:
-- name: credentials-group-name
+- name: library-name
 
 stages:
 - stage: Stage1
   jobs:
   - job: Stage1Job
     variables:
-    - group: ${{ parameters['credentials-group-name'] }}
+    - group: ${{ parameters['library-name'] }}
     steps:
     - script: echo stage1 $(cred.user)
 - stage: Stage2
