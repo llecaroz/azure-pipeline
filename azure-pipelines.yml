@@ -10,6 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
+  - template: templates/stages.yml
   - stage: init
     displayName: Init
     jobs:
