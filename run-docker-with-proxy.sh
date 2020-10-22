@@ -29,24 +29,20 @@ cache_log /dev/null
 cache_store_log /dev/null
 access_log $access_log
 strip_query_terms off
+http_access allow all
 # allow all requests
 # acl all src all
-http_access allow all
 EOF
 
 sudo apt-get -yq install squid
 sudo service squid stop
-squid -f $proxy_conf
-echo return value of squid is: $?, pid is : $!
-
-squid -k check -f $proxy_conf
-echo return value of squid is: $?, pid is : $!
+squid -N -f $proxy_conf &
+squid_pid=$!
+echo return value of squid is: $?, pid is : $squid_pid
 
 curl --proxy $bridge_ip:$proxy_port https://www.microsoft.com -o index.html
 
-squid -k shutdown -a $proxy_port -f $proxy_conf
-echo return value of squid is: $?, pid is : $!
-
+kill -2 $squid_pid
 cat $access_log
 echo acccess log above
 cat index.html
