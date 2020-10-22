@@ -14,7 +14,7 @@ function find_bridge_name {
 }
 bridge_ip=$(ip addr show $(find_bridge_name) | awk -F "[,/ ]+" '/inet /{print $3}')
 proxy_port=8080
-access_log=./logs/access_log
+access_log=$PWD/access_log
 
 cat << EOF  | tee ./proxy.conf > /dev/null
 http_port $bridge_ip:$proxy_port
