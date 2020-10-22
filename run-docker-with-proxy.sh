@@ -35,3 +35,5 @@ squid -f ./proxy.conf
 echo return value of squid is: $?
 squid -k check -a $proxy_port
 echo return value of squid check is: $?
+squid -k check -a 8888
+echo return value of squid check is: $?
