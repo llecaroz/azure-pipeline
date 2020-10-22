@@ -32,6 +32,7 @@ stages:
             echo "IP ADDRESSES IS:"
             /sbin/ifconfig
             echo "DOCKER0 IP:"
+            ip addr show docker0
             /sbin/ifconfig docker0 | awk '/inet addr/{print substr($2,6)}'
             echo Add other tasks to build, test, and deploy your project.
             echo See https://aka.ms/yaml
