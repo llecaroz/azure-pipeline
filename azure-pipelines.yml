@@ -28,6 +28,7 @@ stages:
             squid -v
             docker network ls --format="{{json .Name}}"
             # docker network inspect --format {{json .}}
+            docker network inspect --format "{{json .}}" bridge
             echo "DOCKER0 IP ADDRESS IS:"
             /sbin/ifconfig bridge | grep 'inet addr:' | cut -d: -f2| cut -d' ' -f1
             echo Add other tasks to build, test, and deploy your project.
