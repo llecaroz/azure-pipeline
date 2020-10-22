@@ -41,3 +41,6 @@ echo 1- return value of squid check is: $?
 squid -k check -a 8888
 echo 2 - return value of squid check is: $?
 echo final of final end
+curl --proxy 127.0.0.1:$proxy_port curl https://www.microsoft.com -o index.html
+cat $access_log
+echo acccess log above
