@@ -15,8 +15,11 @@ function find_bridge_name {
 bridge_ip=$(ip addr show $(find_bridge_name) | awk -F "[,/ ]+" '/inet /{print $3}')
 proxy_port=8181
 access_log=$PWD/access_log
+proxy_conf=./proxy
 
-cat << EOF  | tee ./proxy.conf > /dev/null
+rm -rf $access_log
+
+cat << EOF  | tee $proxy_conf > /dev/null
 http_port $bridge_ip:$proxy_port
 http_port 127.0.0.1:$proxy_port
 cache deny all
@@ -33,15 +36,15 @@ EOF
 
 sudo apt-get -yq install squid
 sudo service squid stop
-squid -f ./proxy.conf
+squid -N -f $proxy_conf &
 echo return value of squid is: $?, pid is : $!
 
-squid -k check -f ./proxy.conf
+squid -k check -f $proxy_conf
 echo return value of squid is: $?, pid is : $!
 
 curl --proxy 127.0.0.1:$proxy_port https://www.microsoft.com -o index.html
 
-squid -k shutdown -a $proxy_port -f ./proxy.conf
+squid -k shutdown -a $proxy_port -f $proxy_conf
 echo return value of squid is: $?, pid is : $!
 
 cat $access_log
