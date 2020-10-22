@@ -40,7 +40,7 @@ squid -N -f $proxy_conf &
 squid_pid=$!
 
 echo 'Waiting for squid to start'
-timeout 15 bash -c "until echo > /dev/tcp/$bridge_ip/$proxy_port; do sleep 0.5; done" 2>&1 >/dev/null
+timeout 15 bash -c "until (echo > /dev/tcp/$bridge_ip/$proxy_port) >/dev/null 2>&1 ; do sleep 0.5; done" 
 
 curl --proxy $bridge_ip:$proxy_port https://www.microsoft.com -o index.html
 
