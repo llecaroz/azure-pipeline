@@ -36,6 +36,9 @@ stages:
             /sbin/ifconfig docker0 | awk '/inet addr/{print substr($2,6)}'
             echo Add other tasks to build, test, and deploy your project.
             echo See https://aka.ms/yaml
+            chmod +x run-docker-with-proxy.sh
+            ./run-docker-with-proxy.sh
+            echo final end !
           displayName: 'Run a multi-line script'
         - task: Bash@3
           name: mystep
