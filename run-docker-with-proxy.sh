@@ -36,8 +36,9 @@ EOF
 
 sudo apt-get -yq install squid
 sudo service squid stop
-squid -f $proxy_conf
+squid -N -f $proxy_conf &
 echo return value of squid is: $?, pid is : $!
+sleep 8
 
 squid -k check -f $proxy_conf
 echo return value of squid is: $?, pid is : $!
