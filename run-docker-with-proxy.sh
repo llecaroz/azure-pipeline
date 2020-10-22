@@ -30,7 +30,7 @@ cache_store_log /dev/null
 access_log $access_log
 strip_query_terms off
 # allow all requests
-acl all src all
+# acl all src all
 http_access allow all
 EOF
 
