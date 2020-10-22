@@ -45,7 +45,7 @@ squid -k check -a 8888 -f ./proxy.conf
 echo 2 - return value of squid check is: $?
 echo final of final end
 sleep 3
-curl --proxy 127.0.0.1:$proxy_port curl https://www.microsoft.com
+curl --proxy 127.0.0.1:$proxy_port https://www.microsoft.com -o index.html
 sleep 3
 cat $access_log
 echo acccess log above
