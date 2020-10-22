@@ -44,5 +44,4 @@ curl --proxy $bridge_ip:$proxy_port https://www.microsoft.com -o index.html
 
 kill -2 $squid_pid
 cat index.html
-echo ******** access_log ********
 cat $access_log
