@@ -13,8 +13,10 @@ function find_bridge_name {
   echo docker0
 }
 bridge_ip=$(ip addr show $(find_bridge_name) | awk -F "[,/ ]+" '/inet /{print $3}')
-proxy_port=8080
+proxy_port=8181
 access_log=$PWD/access_log
+
+env
 
 cat << EOF  | tee ./proxy.conf > /dev/null
 http_port $bridge_ip:$proxy_port
