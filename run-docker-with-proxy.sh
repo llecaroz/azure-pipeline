@@ -38,11 +38,10 @@ sudo apt-get -yq install squid
 sudo service squid stop
 squid -N -f $proxy_conf &
 squid_pid=$!
-echo return value of squid is: $?, pid is : $squid_pid
+timeout 15 bash -c 'until echo > /dev/tcp/$bridge_ip/$proxy_port; do sleep 0.5; done'
 
 curl --proxy $bridge_ip:$proxy_port https://www.microsoft.com -o index.html
 
 kill -2 $squid_pid
-cat $access_log
-echo acccess log above
 cat index.html
+cat $access_log
