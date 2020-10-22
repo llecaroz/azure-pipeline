@@ -49,3 +49,4 @@ echo return value of squid is: $?, pid is : $!
 
 cat $access_log
 echo acccess log above
+cat index.html
