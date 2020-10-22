@@ -21,8 +21,10 @@ stages:
         - script: echo Hello, world!
           displayName: 'Run a one-line script'
 
+        - script: sudo apt-get install squid
+          displayName: 'Squid installation'
+
         - script: |
-            sudo apt-get install squid
             squid -v
             echo Add other tasks to build, test, and deploy your project.
             echo See https://aka.ms/yaml
