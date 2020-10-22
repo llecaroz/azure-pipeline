@@ -36,18 +36,16 @@ EOF
 cat ./proxy.conf
 sudo apt-get -yq install squid
 sudo service squid stop
-ps -elf
 squid -N -f ./proxy.conf &
 echo return value of squid is: $?, pid is : $!
 
-# squid -k check -a $proxy_port
-# echo 1- return value of squid check is: $?
-# squid -k check -a 8888
+squid -k check -a $proxy_port -f ./proxy.conf
+echo 1- return value of squid check is: $?
+squid -k check -a 8888 -f ./proxy.conf
 echo 2 - return value of squid check is: $?
 echo final of final end
 sleep 3
-ps -elf
-curl --proxy 127.0.0.1:$proxy_port curl https://www.microsoft.com -o index.html
+curl --proxy 127.0.0.1:$proxy_port curl https://www.microsoft.com
 sleep 3
 cat $access_log
 echo acccess log above
