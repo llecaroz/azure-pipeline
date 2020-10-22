@@ -26,7 +26,7 @@ stages:
 
         - script: |
             squid -v
-            docker network ls --format {{{{json .Name}}}}
+            docker network ls --format="{{json .Name}}"
             # docker network inspect --format {{json .}}
             echo Add other tasks to build, test, and deploy your project.
             echo See https://aka.ms/yaml
