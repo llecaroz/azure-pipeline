@@ -22,6 +22,7 @@ cache deny all
 cache_dir null /dev/null
 pid_filename /dev/null
 cache_log /dev/null
+cache_store_log /dev/null
 access_log $access_log
 strip_query_terms off
 # allow all requests
