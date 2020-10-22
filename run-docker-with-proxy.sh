@@ -15,7 +15,7 @@ bridge_ip=$(ip addr show $(find_bridge_name) | awk -F "[,/ ]+" '/inet /{print $3
 proxy_port=8080
 access_log=./logs/access_log
 
-cat << EOF  | tee proxy.conf > /dev/null
+cat << EOF  | tee ./proxy.conf > /dev/null
 http_port $bridge_ip:$proxy_port
 http_port 127.0.0.1:$proxy_port
 cache deny all
@@ -29,7 +29,8 @@ acl all src all
 http_access allow all
 EOF
 
-squid -f proxy.conf
+cat ./proxy.conf
+squid -f ./proxy.conf
 echo return value of squid is: $?
 squid -k check -a $proxy_port
 echo return value of squid check is: $?
