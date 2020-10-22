@@ -30,9 +30,9 @@ stages:
             # docker network inspect --format {{json .}}
             docker network inspect --format "{{json .}}" bridge
             echo "IP ADDRESSES IS:"
-            /sbin/ifconfig
+            /sbin/ifconfig | 
             echo "DOCKER0 IP:"
-            ip addr show docker0
+            ip addr show docker0 | awk -F "[,/ ]+" '/inet /{print $3}'
             /sbin/ifconfig docker0 | awk '/inet addr/{print substr($2,6)}'
             echo Add other tasks to build, test, and deploy your project.
             echo See https://aka.ms/yaml
