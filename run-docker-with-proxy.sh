@@ -34,7 +34,7 @@ EOF
 cat ./proxy.conf
 sudo apt-get -yq install squid
 ps
-squid -N -f ./proxy.conf &
+squid -X -N -f ./proxy.conf &
 echo return value of squid is: $?
 
 squid -k check -a $proxy_port
