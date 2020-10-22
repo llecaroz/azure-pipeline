@@ -36,14 +36,13 @@ EOF
 
 sudo apt-get -yq install squid
 sudo service squid stop
-squid -N -f $proxy_conf &
+squid -f $proxy_conf
 echo return value of squid is: $?, pid is : $!
-sleep 8
 
 squid -k check -f $proxy_conf
 echo return value of squid is: $?, pid is : $!
 
-curl --proxy 127.0.0.1:$proxy_port https://www.microsoft.com -o index.html
+curl --proxy $bridge_ip:$proxy_port https://www.microsoft.com -o index.html
 
 squid -k shutdown -a $proxy_port -f $proxy_conf
 echo return value of squid is: $?, pid is : $!
