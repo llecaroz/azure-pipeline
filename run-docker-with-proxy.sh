@@ -34,9 +34,10 @@ http_access allow all
 EOF
 
 cat ./proxy.conf
-# sudo apt-get -yq install squid
-# ps -elf
-# squid -N -f ./proxy.conf &
+sudo apt-get -yq install squid
+sudo service stop squid
+ps -elf
+squid -N -f ./proxy.conf &
 echo return value of squid is: $?, pid is : $!
 
 # squid -k check -a $proxy_port
