@@ -1,4 +1,5 @@
 #!/bin/bash
+
 function find_bridge_name {
   for i in $(docker network ls --format "{{.Name}}") 
   do
@@ -31,9 +32,12 @@ http_access allow all
 EOF
 
 cat ./proxy.conf
+sudo apt-get -yq install squid
 squid -f ./proxy.conf
 echo return value of squid is: $?
+
 squid -k check -a $proxy_port
-echo return value of squid check is: $?
+echo 1- return value of squid check is: $?
 squid -k check -a 8888
-echo return value of squid check is: $?
+echo 2 - return value of squid check is: $?
+echo final of final end
