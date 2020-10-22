@@ -28,6 +28,8 @@ stages:
             squid -v
             docker network ls --format="{{json .Name}}"
             # docker network inspect --format {{json .}}
+            echo "DOCKER0 IP ADDRESS IS:"
+            /sbin/ifconfig docker0 | grep 'inet addr:' | cut -d: -f2| cut -d' ' -f1
             echo Add other tasks to build, test, and deploy your project.
             echo See https://aka.ms/yaml
           displayName: 'Run a multi-line script'
