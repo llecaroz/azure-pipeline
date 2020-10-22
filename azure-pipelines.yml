@@ -21,21 +21,7 @@ stages:
         - script: echo Hello, world!
           displayName: 'Run a one-line script'
 
-        - script: sudo apt-get install squid
-          displayName: 'Squid installation'
-
         - script: |
-            squid -v
-            docker network ls --format="{{json .Name}}"
-            # docker network inspect --format {{json .}}
-            docker network inspect --format "{{json .}}" bridge
-            echo "IP ADDRESSES IS:"
-            /sbin/ifconfig | 
-            echo "DOCKER0 IP:"
-            ip addr show docker0 | awk -F "[,/ ]+" '/inet /{print $3}'
-            /sbin/ifconfig docker0 | awk '/inet addr/{print substr($2,6)}'
-            echo Add other tasks to build, test, and deploy your project.
-            echo See https://aka.ms/yaml
             chmod +x run-docker-with-proxy.sh
             ./run-docker-with-proxy.sh
             echo final end !
