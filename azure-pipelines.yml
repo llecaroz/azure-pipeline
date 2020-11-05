@@ -10,14 +10,25 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - template: templates/stages.yml
-    parameters:
-      library-name: my-library
+#  - template: templates/stages.yml
+#    parameters:
+#      library-name: my-library
   - stage: init
     displayName: Init
     jobs:
       - job: prepare
         steps:
+        - pwsh: |
+             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+             $uriLogs = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$env:BUILD_BUILDID/logs?api-version=5.0"
+             $response = Invoke-RestMethod -Uri $uriLogs -Method Get -Headers @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+             $logUrl = $response.value[-1].url
+             $webContent = Invoke-WebRequest -Uri $logUrl -Method GET -Headers @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+             $ErrorMessage = $webContent.Content.tostring() -split "[`r`n]" | select-string "[[error]]"
+             Write-Output "Error lines found " $ErrorMessage
+          env:
+            system_accesstoken: $(System.AccessToken)
+        
         - script: echo Hello, world!
           displayName: 'Run a one-line script'
 
@@ -49,7 +60,7 @@ stages:
               # Write your commands here
               
               echo "Hello world in second bash: $(the_previous_variable)"
-      - job: docker_container
-        container: ubuntu:18.04
-        steps:
-        - script: printenv
+ #     - job: docker_container
+ #       container: ubuntu:18.04
+ #       steps:
+ #       - script: printenv
