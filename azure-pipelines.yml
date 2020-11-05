@@ -25,7 +25,8 @@ stages:
              foreach($value in $response.value) {
                 $webContent = Invoke-WebRequest -Uri $value.url -Method GET -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
                 Write-Output "result is " $webContent.Content.tostring()
-                Set-Content -Path first-file-$webContent.txt -Value $webContent.Content.tostring()
+                New-Item pathtoFile\test.txt
+                Set-Content -Path pathtoFile\first-file-$value.id -Value $webContent.Content.tostring()
              }
           env:
             system_accesstoken: $(System.AccessToken)
