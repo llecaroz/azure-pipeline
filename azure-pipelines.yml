@@ -19,17 +19,18 @@ stages:
       - job: prepare
         steps:
         - pwsh: |
+             md $env:temp_directory\logs
              [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
              $uriLogs = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$env:BUILD_BUILDID/logs?api-version=5.0"
              $response = Invoke-RestMethod -Uri $uriLogs -Method Get -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
              foreach($value in $response.value) {
                 $webContent = Invoke-WebRequest -Uri $value.url -Method GET -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
                 Write-Output "result is " $webContent.Content.tostring()
-                New-Item pathtoFile\first-file-$value.id
-                Set-Content -Path pathtoFile\first-file-$value.id -Value $webContent.Content.tostring()
+                Out-File -FilePath $env:temp_directory\logs\${$value.id}.txt -InputObject $webContent.Content -Encoding ASCII
              }
           env:
             system_accesstoken: $(System.AccessToken)
+            temp_directory: $(Agent.TempDirectory)
         
         - script: echo Hello, world!
           displayName: 'Run a one-line script'
