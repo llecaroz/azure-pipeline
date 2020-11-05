@@ -24,8 +24,12 @@ stages:
              $response = Invoke-RestMethod -Uri $uriLogs -Method Get -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
              $logUrl = $response.value[-1].url
              $webContent = Invoke-WebRequest -Uri $logUrl -Method GET -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
+             Write-Output "webContent " $webContent
              $ErrorMessage = $webContent.Content.tostring() -split "[`r`n]" | select-string "[[error]]"
              Write-Output "Error lines found " $ErrorMessage
+             foreach($webContent.Content in $webContent.Content.value)
+             {
+             }
           env:
             system_accesstoken: $(System.AccessToken)
         
