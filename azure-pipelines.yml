@@ -23,7 +23,7 @@ stages:
              $uriLogs = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$env:BUILD_BUILDID/logs?api-version=5.0"
              $response = Invoke-RestMethod -Uri $uriLogs -Method Get -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
              foreach($value in $response.value) {
-                $webContent = Invoke-WebRequest -Uri $logUrl -Method GET -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
+                $webContent = Invoke-WebRequest -Uri $value.url -Method GET -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
                 Write-Output "result is " $webContent.Content.tostring()
              }
           env:
