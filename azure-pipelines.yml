@@ -74,7 +74,7 @@ stages:
     variables:
       repositories: $[stageDependencies.init.use.outputs['readMetadata.metadata.repositories']]
     jobs:
-      - ${{ each s in variables.repositories }}:
+      - $[ each s in variables.repositories ]:
         - ${{ each repository in s }}:
           - ${{ if eq(repository.key, 'repository') }}:
             - job:
