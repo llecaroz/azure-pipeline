@@ -63,7 +63,23 @@ stages:
               # Write your commands here
               
               echo "Hello world in second bash: $(the_previous_variable)"
- #     - job: docker_container
- #       container: ubuntu:18.04
- #       steps:
- #       - script: printenv
+        - task: oneLuckiDevJson2Variable@1
+          inputs:
+            jsonFile: 'test.json'
+            shouldPrefixVariables: true
+            variablePrefix: 'metadata'
+          name: readMetadata
+  - stage: integration
+    dependsOn: init
+    jobs:
+      - ${{ each s in $[ stageDependencies.init.use.outputs['readMetadata.metadata.repositories'] ]  }}:
+        - ${{ each repository in s }}:
+          - ${{ if eq(repository.key, 'repository') }}:
+            - job:
+              - task: Bash@3
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    echo "Repository is: $(the_previous_variable)"
+                  env:
+                    repositoryId: ${{repository.value}}
