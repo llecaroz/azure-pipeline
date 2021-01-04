@@ -1,4 +1,10 @@
 {
-  "entry1": "value1",
-  "entry2": "value2
+  "repositories": [
+    {
+       "repository": "value1"
+    },
+    {
+       "repository": "value2"
+    }
+  ]
 }
