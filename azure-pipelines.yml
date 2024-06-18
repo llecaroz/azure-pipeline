@@ -21,6 +21,5 @@ stages:
     steps:
     - script: |
         env
-        echo $(ENV_$(namespace1.toUpperCase())_$(capability1.toUpperCase()))
-        echo $(ENV_$(namespace2.toUpperCase())_$(capability2.toUpperCase()))
+        echo $ENV_$[ upper(variables.namespace1) ]_$[ upper(variables.capability1)
       displayName: 'Display environment variables'
