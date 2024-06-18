@@ -22,18 +22,6 @@ stages:
     - script: |
         env
         echo value for namespace1 is $(namespace1)
-        echo ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
-        echo THIS IS WORKING! ${!ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')}
         export mycommand=ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
-        echo $mycommand
-        echo THIS IS WORKING 2! ${!mycommand}
-        echo echo \$ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]') > toto.sh
-        ba
-        chmod +w ./toto.sh
-        echo here is toto.sh
-        cat ./toto.sh
-        ./toto.sh
-        echo end of toto.sh
-        echo content 2 is $(echo $${mycommand})
-        echo content 3 is $($mycommand)
+        echo THIS IS WORKING 2 ${!mycommand}
       displayName: 'Display environment variables'
