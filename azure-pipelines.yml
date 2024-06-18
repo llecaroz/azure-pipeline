@@ -16,72 +16,9 @@ stages:
   - stage: init
     displayName: Init
     jobs:
-      - job: prepare
-        steps:
-        - pwsh: |
-             md $env:temp_directory/logs
-             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-             $uriLogs = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$env:BUILD_BUILDID/logs?api-version=5.0"
-             $response = Invoke-RestMethod -Uri $uriLogs -Method Get -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
-             foreach($value in $response.value) {
-                $webContent = Invoke-WebRequest -Uri $value.url -Method GET -Headers @{ Authorization = "Bearer $env:system_accesstoken"}
-                Write-Output "result is " $webContent.Content.tostring()
-                Out-File -FilePath "$($env:temp_directory)/logs/$($value.id).txt" -InputObject $webContent.Content -Encoding ASCII
-             }
-          env:
-            system_accesstoken: $(System.AccessToken)
-            temp_directory: $(Agent.TempDirectory)
-        
-        - script: echo Hello, world!
-          displayName: 'Run a one-line script'
-
-        - script: |
-            chmod +x run-docker-with-proxy.sh
-            ./run-docker-with-proxy.sh
-            echo final end !
-          displayName: 'Run a multi-line script'
-        - task: Bash@3
-          name: mystep
-          inputs:
-            targetType: 'inline'
-            script: |
-              # Write your commands here
-              export samplevar=myvalue
-              echo "##vso[task.setvariable variable=vsoVar;isOutput=true]$samplevar"
-              echo 'Hello world'
-      - job: use
-        dependsOn: prepare
+      - job: 
+        displayName: Build
         variables:
-          the_previous_variable:  $[ dependencies.prepare.outputs['mystep.vsoVar'] ]
+        - group: test
         steps:
-        - script: echo Hello, world!
-          displayName: 'Run a one-line script'
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            script: |
-              # Write your commands here
-              
-              echo "Hello world in second bash: $(the_previous_variable)"
-        - task: oneLuckiDevJson2Variable@1
-          inputs:
-            jsonFile: 'test.json'
-            shouldPrefixVariables: true
-            variablePrefix: 'metadata'
-          name: readMetadata
-  - stage: integration
-    dependsOn: init
-    variables:
-      repositories: $[stageDependencies.init.use.outputs['readMetadata.metadata.repositories']]
-    jobs:
-      - ${{ each s in variables.repositories }}:
-        - ${{ each repository in s }}:
-          - ${{ if eq(repository.key, 'repository') }}:
-            - job:
-              - task: Bash@3
-                inputs:
-                  targetType: 'inline'
-                  script: |
-                    echo "Repository is: $(the_previous_variable)"
-                  env:
-                    repositoryId: ${{repository.value}}
+        - script: echo value is $(var1)
