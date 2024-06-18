@@ -1,24 +1,25 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+variables:
+- group: test
+- name: namespace1
+  value: 'yourNamespace1'
+- name: capability1
+  value: 'yourCapability1'
+- name: namespace2
+  value: 'yourNamespace2'
+- name: capability2
+  value: 'yourCapability2'
 
 stages:
-#  - template: templates/stages.yml
-#    parameters:
-#      library-name: my-library
-  - stage: init
-    displayName: Init
-    jobs:
-      - job: 
-        displayName: Build
-        variables:
-        - group: test
-        steps:
-        - script: echo value is $(var1)
+- stage: DisplayVariables
+  displayName: 'Display Environment Variables'
+  jobs:
+  - job: Display
+    displayName: 'Display'
+    steps:
+    - script: |
+        echo "ENV_$(namespace1)-$(capability1): $ENV_$(namespace1)_$(capability1)"
+        echo "ENV_$(namespace2)-$(capability2): $ENV_$(namespace2)_$(capability2)"
+      displayName: 'Display environment variables'
