@@ -25,6 +25,6 @@ stages:
         echo ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
         export mycommand=ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
         echo $mycommand
-        echo content 2 is $(echo $mycommand)
+        echo content 2 is $(echo $${mycommand})
         echo content 3 is $($mycommand)
       displayName: 'Display environment variables'
