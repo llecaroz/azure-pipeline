@@ -20,6 +20,7 @@ stages:
     displayName: 'Display'
     steps:
     - script: |
+        env
         echo "ENV_$(namespace1)-$(capability1): $ENV_$(namespace1)_$(capability1)"
         echo "ENV_$(namespace2)-$(capability2): $ENV_$(namespace2)_$(capability2)"
       displayName: 'Display environment variables'
