@@ -21,5 +21,5 @@ stages:
     steps:
     - script: |
         env
-        echo $ENV_$[ upper(variables.namespace1) ]_$[ upper(variables.capability1)
+        echo $ENV_$[ upper(variables.namespace1) ]_$[ upper(variables.capability1) ]
       displayName: 'Display environment variables'
