@@ -23,7 +23,7 @@ stages:
         env
         echo value for namespace1 is $(namespace1)
         echo ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
-        mycommand=echo $(echo \$ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]'))
+        mycommand=echo $(bash -c echo \$ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]'))
         echo $mycommand
         echo $($mycommand)
       displayName: 'Display environment variables'
