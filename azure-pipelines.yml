@@ -22,6 +22,6 @@ stages:
     - script: |
         env
         echo value for namespace1 is $(namespace1)
-        echo ENV_$(echo "${namespace1}" | tr '[:lower:]' '[:upper:]')_$(echo "${capability1}" | tr '[:lower:]' '[:upper:]')
-        echo $ENV_$(echo "${namespace1}" | tr '[:lower:]' '[:upper:]')_$(echo "${capability1}" | tr '[:lower:]' '[:upper:]')
+        echo ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
+        echo $ENV_$(echo "$(namespace1)" | tr '[:lower:]' '[:upper:]')_$(echo "$(capability1)" | tr '[:lower:]' '[:upper:]')
       displayName: 'Display environment variables'
